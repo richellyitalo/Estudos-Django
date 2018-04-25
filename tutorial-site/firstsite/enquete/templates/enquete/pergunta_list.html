@@ -1,0 +1,11 @@
+<h3>Pergunta - List</h3>
+
+<ul>
+    {% for pergunta in pergunta_list %}
+        <li>
+            <a href="{% url 'enquete:detalhar' pergunta.id %}">
+                {{ pergunta.pergunta_texto }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
