@@ -28,6 +28,9 @@ class DetailView(generic.DetailView):
     # template_name = 'polls/detail.html'
     # o template passa a ser MODULO / MODEL _ VIEW = polls/question_detail.html
 
+    def get_queryset(self):
+        return Question.objects.filter(pub_date__lte=timezone.now())
+
 
 class ResultsView(generic.DetailView):
     model = Question
