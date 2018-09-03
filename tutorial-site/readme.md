@@ -4,17 +4,19 @@
 Mude seus modelos (em models.py).
 Rode python 'manage.py makemigrations' para criar migrações para suas modificações
 Rode python 'manage.py migrate' para aplicar suas modificações no banco de dados
-*EXTRA: 'python manage.py sqlmigrate polls 0001' para visualizar o sql
+*EXTRA: ```python manage.py sqlmigrate polls 0001``` para visualizar o sql
 
-## shell do python
+## Shell do python
 ```python manage.py shell```
 
-## criar super usuário
+## Criar super usuário
 ```python manage.py createsuperuser```
 
-## iniciar o server
+## Iniciar o server
 ```python manage.py runserver```
 
-## salvando sem race conditions
+## Salvando sem race conditions
+<pre>
 from django.db.models import F
 registro.votos = F('votos') + 1
+<pre>
