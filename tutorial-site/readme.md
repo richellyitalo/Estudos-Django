@@ -20,4 +20,3 @@ Rode python 'manage.py migrate' para aplicar suas modificações no banco de dad
 from django.db.models import F
 registro.votos = F('votos') + 1
 <pre>
-
