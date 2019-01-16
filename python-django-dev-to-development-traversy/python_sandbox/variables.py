@@ -10,7 +10,22 @@ can be single or double quotes
 """
 VARIABLE RULES:
   - Variable names are case sensitive (name and NAME are different variables)
-  - Must start with a letter or an underscore
+  - Must start with a letter or an underscoreg
   - Can have numbers but can not start with one
 """
-print(1)
+
+# x = 1
+# y = 2.5
+# name = 'Jão'
+# is_cool = True
+
+# Shorthand association
+x, y, name, is_cool = (1, 2.5, 'Jão', True)
+
+print(x, y, name, is_cool)
+
+# Casting
+y = int(y)
+
+print(type(y))
+print(y)
