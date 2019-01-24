@@ -15,8 +15,8 @@
                 <li class="nav-item mr-3 {%if '/sobre' in request.path %}active{% endif %}">
                     <a class="nav-link" href="{% url 'sobre' %}">About</a>
                 </li>
-                <li class="nav-item mr-3">
-                    <a class="nav-link" href="listings.html">Featured Listings</a>
+                <li class="nav-item mr-3 {% if '/listings' in request.path %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'listings' %}">Featured Listings</a>
                 </li>
             </ul>
 
