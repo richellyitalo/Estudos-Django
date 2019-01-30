@@ -4,5 +4,8 @@
     "activityBar.background": "#571032",
     "titleBar.activeBackground": "#7A1747",
     "titleBar.activeForeground": "#FEFCFD"
-  }
+  },
+  "python.linting.pylintArgs": [
+     "--load-plugins=pylint_django"
+  ]
 }

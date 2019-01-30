@@ -1,10 +1,19 @@
 from django.shortcuts import render
 
-def index(request):
-    return render(request, 'listings/listings.html')
+from .models import Listing
 
-def listing(request):
-    return render(request, 'listings/listing.html')
+def index(request):
+    listings = Listing.objects.all()
+    context = {
+        'listings': listings
+    }
+    return render(request, 'listings/listings.html', context)
+
+def listing(request, listing_id):
+    context = {
+        'listing_id': listing_id
+    }
+    return render(request, 'listings/listing.html', context)
 
 def search(request):
     return render(request, 'listings/search.html')
