@@ -1,9 +1,14 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 
 from .models import Listing
 
 def index(request):
-    listings = Listing.objects.all()
+    listings_list = Listing.objects.order_by('-list_date').filter(is_published=True)
+    paginator = Paginator(listings_list, 3)
+
+    page = request.GET.get('page')
+    listings = paginator.get_page(page)
     context = {
         'listings': listings
     }

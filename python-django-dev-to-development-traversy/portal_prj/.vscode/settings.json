@@ -6,6 +6,7 @@
     "titleBar.activeForeground": "#FEFCFD"
   },
   "python.linting.pylintArgs": [
-     "--load-plugins=pylint_django"
+     "--load-plugins=pylint_django",
+     "--errors-only"
   ]
 }
