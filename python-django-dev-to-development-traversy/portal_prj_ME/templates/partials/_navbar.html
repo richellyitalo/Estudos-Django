@@ -22,14 +22,18 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="register.html">
+                    <a class="nav-link
+                        {% if 'register' in request.path %}active{% endif %}
+                    " href="{% url 'register' %}">
                         <i class="fas fa-user-plus"></i> Register</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="login.html">
+                    <a class="nav-link
+                        {% if 'login' in request.path %}active{% endif %}
+                    " href="{% url 'login' %}">
                         <i class="fas fa-sign-in-alt"></i>
-
-                        Login</a>
+                        Login
+                    </a>
                 </li>
             </ul>
         </div>
