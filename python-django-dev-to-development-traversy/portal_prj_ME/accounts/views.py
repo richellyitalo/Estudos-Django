@@ -46,6 +46,7 @@ def login(request):
         password = request.POST['password']
         user = auth.authenticate(request, username=username, password=password)
         if user is not None:
+            auth.login(request, user)
             messages.success(request, 'Autenticado com sucesso')
             return redirect('dashboard')
         else:
@@ -55,5 +56,6 @@ def login(request):
         return render(request, 'accounts/login.html')
     
 def logout(request):
-    # Deslogar
-    return redirect('home')
+    if request.method == 'POST':
+        auth.logout(request)
+        return redirect('home')
