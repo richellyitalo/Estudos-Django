@@ -24,7 +24,7 @@
 `python manage.py runserver`
 
 ## Criar App
-`python manage.py start app APPNAME`
+`python manage.py startapp APPNAME`
 
 
 # Registrando novo App
