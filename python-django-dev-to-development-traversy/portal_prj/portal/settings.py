@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'listings.apps.ListingsConfig',
     'realtors.apps.RealtorsConfig',
     'accounts.apps.AccountsConfig',
+    'contacts.apps.ContactsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -141,3 +142,9 @@ from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
+
+# Emails
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '7dabd90189860b'
+EMAIL_HOST_PASSWORD = '1d01b30c2ba453'
+EMAIL_PORT = '2525'
