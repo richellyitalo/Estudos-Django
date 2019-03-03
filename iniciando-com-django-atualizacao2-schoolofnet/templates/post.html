@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <ul>
+        <h1>{{ post.title }}</h1>
+        <p>
+            {{ post.content }}
+        </p>
+        <p>
+            Autor: <strong>{{ post.user.first_name | add:' ' | add:post.user.last_name }}</strong>
+        </p>
+    </ul>
+{% endblock %}
