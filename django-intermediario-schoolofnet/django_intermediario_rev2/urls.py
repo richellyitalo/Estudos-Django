@@ -1,4 +1,4 @@
-"""api_django_rest URL Configuration
+"""django_intermediario_rev2 URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from my_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', views.login),
 ]
