@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block title %}Addresses - {% endblock %}
+
+{% block content %}
+    <h1>Lista de Endereçoes</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Endereço</th>
+            <th>Complemento</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for address in addresses %}
+            <tr>
+                <td>{{ address.id }}</td>
+                <td>{{ address.address }}</td>
+                <td>{{ address.address_complement_normalized }}</td>
+                <td>{{ address.city }}</td>
+                <td>{{ address.state }}</td>
+                <td>
+                    <a href="/addresses/{{ address.id }}/update/">Editar</a>
+                    |
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

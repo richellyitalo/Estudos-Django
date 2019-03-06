@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block title %}Addresses - {% endblock %}
+{% block content %}
+    <h1>Novo Endereço</h1>
+    <form action="/addresses/{{ address.id }}/update/" method="post">
+        {% include 'my_app/address/form.html' %}
+        <button class="btn btn-success">Atualizar</button>
+    </form>
+{% endblock %}

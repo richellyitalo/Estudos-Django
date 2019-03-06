@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block title %}Addresses - {% endblock %}
+address
+address_complement
+city
+state
+country
+user
+{% block content %}
+    <h1>Novo Endereço</h1>
+    <form action="/addresses/create/" method="post">
+        {% include 'my_app/address/form.html' %}
+        <button class="btn btn-success">Salvar</button>
+    </form>
+{% endblock %}
