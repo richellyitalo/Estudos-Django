@@ -4,6 +4,9 @@
 
 {% block content %}
     <h1>Lista de Endereçoes</h1>
+    <p>
+        <a href="{% url 'my_app:address_create' %}" class="btn btn-primary">Novo Endereço</a>
+    </p>
     <table class="table">
         <thead>
         <tr>
@@ -26,6 +29,7 @@
                 <td>
                     <a href="/addresses/{{ address.id }}/update/">Editar</a>
                     |
+                    <a href="{% url 'my_app:address_destroy' address.id %}" class="text-danger">Excluir</a>
                 </td>
             </tr>
         {% endfor %}
