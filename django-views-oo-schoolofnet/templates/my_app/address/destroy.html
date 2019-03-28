@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block title %}Addresses - {% endblock %}
+{% block content %}
+    <h1>Novo Endereço</h1>
+    <p>
+        <a href="{% url 'my_app:address_list' %}" class="btn btn-primary">Voltar para listagem</a>
+    </p>
+    <form action="{% url 'my_app:address_destroy' address.id %}" method="post">
+        {% csrf_token %}
+        <fieldset disabled>
+            {% include 'my_app/address/form_django.html' %}
+        </fieldset>
+        <button class="btn btn-danger">Excluir</button>
+    </form>
+{% endblock %}
