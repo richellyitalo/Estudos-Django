@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, RedirectView, ListView, DetailView
 from .models import Address
-from .choices import STATE_CHOICES
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 from .forms import AddressForm
+from .choices import STATE_CHOICES
 
 
 class LoginView(TemplateView):
@@ -71,6 +74,38 @@ class LoginView(TemplateView):
 #         return render(request, self.template_name, context)
 
 
+# 301 - permanente (browser salva como cache destino)
+# 302 - temporário
+class LogoutRedirectView(RedirectView):
+    url = '/login/'
+
+    @method_decorator(login_required(login_url=settings.LOGIN_URL))
+    def get(self, request, *args, **kwargs):
+        django_logout(request)
+        return super().get(request, *args, **kwargs)
+
+
+# protegendo da maneira *2
+# @method_decorator(login_required(login_url='/login/'), name='dispatch')
+class TesteView(LoginRequiredMixin, TemplateView):
+    # protegendo da maneira *3 (LoginRequiredMixin)
+    template_name = 'my_app/home.html'
+
+    def get(self, request, *args, **kwargs):
+        return self.render_to_response({})
+
+    # protegendo da maneira *1
+    # @method_decorator(login_required(login_url='/login/'))
+    # def dispatch(self, request, *args, **kwargs):
+    #     return super().dispatch(request, *args, **kwargs)
+
+
+@login_required(login_url='/login/')
+def logout(request):
+    django_logout(request)
+    return redirect('/login/')
+
+
 def login(request):
     context = {
         'app_path': request.get_full_path
@@ -96,24 +131,28 @@ def login(request):
     return render(request, 'my_app/login.html', context)
 
 
-@login_required(login_url='/login/')
-def logout(request):
-    django_logout(request)
-    return redirect('/login/')
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'my_app/home.html'
+
+# @login_required(login_url='/login/')
+# def home(request):
+#     return render(request, 'my_app/home.html')
 
 
-@login_required(login_url='/login/')
-def home(request):
-    return render(request, 'my_app/home.html')
+# Ver MultipleObjectMixin
+class AdressListView(LoginRequiredMixin, ListView):
+    model = Address
+    template_name = 'my_app/address/list.html'
+    # paginate_by = 1
+    # context_object_name = 'addresses'
 
-
-@login_required(login_url='/login/')
-def address_list(request):
-    addresses = Address.objects.all()
-    context = {
-        'addresses': addresses
-    }
-    return render(request, 'my_app/address/list.html', context)
+# @login_required(login_url='/login/')
+# def address_list(request):
+#     addresses = Address.objects.all()
+#     context = {
+#         'addresses': addresses
+#     }
+#     return render(request, 'my_app/address/list.html', context)
 
 
 # Criação sem utilização do form orientado a objeto
@@ -158,6 +197,13 @@ def address_list(request):
 #             return redirect('/addresses/')
 #
 #     return render(request, 'my_app/address/create.html', {'form': form, 'form_submitted': form_submitted})
+
+
+# Ver SingleObjectMixin
+class AddressDetail(LoginRequiredMixin, DetailView):
+    model = Address
+    template_name = 'my_app/address/detail.html'
+
 
 # Form utilizando Model
 @login_required(login_url='/login/')

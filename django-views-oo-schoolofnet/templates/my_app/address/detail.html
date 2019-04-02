@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block title %}Detalhes do endereço - {{ object.address }} {% endblock %}
+
+{% block content %}
+    <h1>Detalhe do endereço - {{ object.address }}</h1>
+    <table class="table">
+        <tbody>
+        <tr>
+            <th scope="row">#</th>
+            <td>{{ object.pk }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Endereço</th>
+            <td>{{ object.address }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

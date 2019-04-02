@@ -19,7 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for address in addresses %}
+        {% for address in object_list %}
             <tr>
                 <td>{{ address.id }}</td>
                 <td>{{ address.address }}</td>
@@ -28,6 +28,8 @@
                 <td>{{ address.state }}</td>
                 <td>
                     <a href="/addresses/{{ address.id }}/update/">Editar</a>
+                    |
+                    <a href="/addresses/{{ address.id }}/detail/">Detalhar</a>
                     |
                     <a href="{% url 'my_app:address_destroy' address.id %}" class="text-danger">Excluir</a>
                 </td>
