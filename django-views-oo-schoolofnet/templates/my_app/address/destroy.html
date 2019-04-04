@@ -8,9 +8,6 @@
     </p>
     <form action="{% url 'my_app:address_destroy' address.id %}" method="post">
         {% csrf_token %}
-        <fieldset disabled>
-            {% include 'my_app/address/form_django.html' %}
-        </fieldset>
         <button class="btn btn-danger">Excluir</button>
     </form>
 {% endblock %}

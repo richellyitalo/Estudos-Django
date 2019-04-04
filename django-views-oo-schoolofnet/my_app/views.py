@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView, View, RedirectView, ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, View, RedirectView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import FormMixin
 from .models import Address
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
+from django import forms
+from django.core.mail import send_mail
 from .forms import AddressForm
 from .choices import STATE_CHOICES
 
@@ -205,6 +209,26 @@ class AddressDetail(LoginRequiredMixin, DetailView):
     template_name = 'my_app/address/detail.html'
 
 
+class FormSubmittedToContext(FormMixin):
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form, form_submitted=True))
+
+
+class AddressCreate(LoginRequiredMixin, FormSubmittedToContext, CreateView):
+    model = Address
+    form_class = AddressForm
+    template_name = 'my_app/address/create.html'
+    # fields = ['address', 'address_complement', 'city', 'state', 'country']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    # validação sem FormSubmittedToContext
+    # def form_invalid(self, form):
+    #     return self.render_to_response(self.get_context_data(form=form, form_submitted=True))
+
+
 # Form utilizando Model
 @login_required(login_url='/login/')
 def address_create(request):
@@ -267,6 +291,14 @@ def address_create(request):
 #     return render(request, 'my_app/address/update.html',
 #                   {'address': address, 'form': form, 'form_submitted': form_submitted})
 
+
+class AddressUpdate(LoginRequiredMixin, FormSubmittedToContext, UpdateView):
+    model = Address
+    form_class = AddressForm
+    template_name = 'my_app/address/update.html'
+    success_url = reverse_lazy('my_app:address_list')
+
+
 # Form utilizando Model
 @login_required(login_url='/login/')
 def address_update(request, id):
@@ -284,6 +316,12 @@ def address_update(request, id):
                   {'address': address, 'form': form, 'form_submitted': form_submitted})
 
 
+class AddressDeleteView(LoginRequiredMixin, DeleteView):
+    model = Address
+    template_name = 'my_app/address/destroy.html'
+    success_url = reverse_lazy('my_app:address_list')
+
+
 @login_required(login_url='/login/')
 def address_destroy(request, id):
     address = Address.objects.get(id=id)
@@ -298,3 +336,44 @@ def address_destroy(request, id):
         'form': form
     }
     return render(request, 'my_app/address/destroy.html', context)
+
+
+class ContactForm(forms.Form):
+    name = forms.CharField(
+        label='Seu nome',
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    email = forms.EmailField(
+        label='Seu e-mail',
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    subject = forms.CharField(
+        label='Assunto',
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}))
+
+    def send_mail(self):
+        #subject = '%s - %s' % (self.cleaned_data['name'], self.cleaned_data['subject'])
+
+        send_mail(
+            self.cleaned_data['subject'],
+            self.cleaned_data['message'],
+            self.cleaned_data['email'],
+            [settings.EMAIL_TO],
+            fail_silently=False,
+        )
+
+
+class ContactView(FormView):
+    template_name = 'my_app/contact.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('my_app:contact')
+
+    def form_valid(self, form):
+        form.send_mail()
+        # print(form.cleaned_data['name'])
+        return super().form_valid(form)
+
+

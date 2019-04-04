@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block title %}Addresses - {% endblock %}
+
+{% block content %}
+    <h1>Novo Endereço</h1>
+    <p>
+        <a href="{% url 'my_app:address_list' %}" class="btn btn-primary">Voltar para listagem</a>
+    </p>
+    <form action="{% url 'my_app:contact' %}" method="post" {% if form_submitted %}class="was-validated"{% endif %}>
+        {% csrf_token %}
+
+        <div class="form-group">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+            <div class="invalid-feedback">
+                {{ form.name.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            <div class="invalid-feedback">
+                {{ form.email.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.subject.label_tag }}
+            {{ form.subject }}
+            <div class="invalid-feedback">
+                {{ form.subject.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form.message.label_tag }}
+            {{ form.message }}
+            <div class="invalid-feedback">
+                {{ form.message.errors }}
+            </div>
+        </div>
+
+        <button class="btn btn-success">Enviar</button>
+    </form>
+{% endblock %}
