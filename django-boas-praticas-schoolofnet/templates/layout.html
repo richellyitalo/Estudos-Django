@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>{% block title %}{% endblock %}Sistema de gerenciamento de usuário</title>
+</head>
+<body>
+    <div class="container">
+        <h5>{% if request.user.is_authenticated %}Olá, {{ request.user.first_name }}{% endif %}</h5>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
