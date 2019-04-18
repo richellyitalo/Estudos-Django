@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from stock import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('stock_entries/', views.entries_list, name='stock-entries'),
+    path('stock_new/', views.entries_new, name='stock-new'),
+    path('stock_create/', views.entries_create, name='stock-create'),
 ]

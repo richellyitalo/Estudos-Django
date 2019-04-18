@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>Nova entrada</h1>
+    <form action="{% url 'stock-create' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-success">Cadastrar entrada</button>
+    </form>
+{% endblock %}

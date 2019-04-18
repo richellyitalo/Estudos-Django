@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>Stock Entries</h1>
+    <p>
+        <a href="{% url 'stock-new' %}" class="btn btn-primary">Nova entrada de estoque</a>
+    </p>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th width="20">#</th>
+            <th>Quantidade</th>
+            <th>Produto</th>
+            <th>Estoque</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for entry in entries %}
+                <tr>
+                    <td>{{ entry.pk }}</td>
+                    <td>{{ entry.amount }}</td>
+                    <td>{{ entry.product.name }}</td>
+                    <td>{{ entry.product.stock }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

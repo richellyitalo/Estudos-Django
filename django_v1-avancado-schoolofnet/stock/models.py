@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.signals import post_save
 
 # Buscar por Meta inheritance
 # https://docs.djangoproject.com/en/2.2/topics/db/models/
@@ -19,7 +20,28 @@ class Product(TimestampableMixin):
     price_sale = models.DecimalField(decimal_places=2, max_digits=5)
     price_purchase = models.DecimalField(decimal_places=2, max_digits=5)
 
+    def __str__(self):
+        return self.name
+
+    def decrement(self, amount):
+        if self.stock - amount < 0:
+            raise ValueError('Sem estoque disponível')
+        self.stock -= amount
+
+    # @classmethod
+    # def increment_stock(cls, sender, instance, **kwargs):
+    #     print('Olá teste')
+    #     print(sender)
+    #     print(instance)
+    #     print(kwargs)
+    #     product = instance.product
+    #     product.stock += instance.amount
+    #     product.save()
+
 
 class StockEntry(TimestampableMixin):
     amount = models.IntegerField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+
+# post_save.connect(Product.increment_stock, sender=StockEntry)
