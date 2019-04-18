@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate, login as django_login, logout as d
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-
 def login(request):
     context = {
         'app_path': request.get_full_path

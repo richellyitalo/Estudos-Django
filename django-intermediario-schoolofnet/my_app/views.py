@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpRequest
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.contrib.auth.decorators import login_required
 from .models import Address
@@ -6,7 +6,7 @@ from .choices import STATE_CHOICES
 from .forms import AddressForm
 
 
-def login(request):
+def login(request: HttpRequest):
     context = {
         'app_path': request.get_full_path
     }
